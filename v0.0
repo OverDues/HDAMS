@@ -1,0 +1,65 @@
+#include "RTClib.h"
+#include <Simple5641AS.h>
+#include <LCD_I2C.h>
+#include <EEPROM.h>
+#include <Wire.h>
+
+LCD_I2C lcd(0x27, 16, 2); //setting up LCD display
+
+const uint8_t digitSelectionPins[] = {0,1,2,3};
+const uint8_t segmentPins[] = {5,6,7,8,9,10,11,12};
+Simple5641AS inputDisplay(segmentPins,digitSelectionPins); //setting up digit display
+
+RTC_DS1307 rtc;
+
+void setup() {
+  Serial.begin(9600);
+  lcd.begin();
+  lcd.backlight();
+  lcd.clear();
+
+  lcd.print("Welcome to HDEMS");
+  delay(3000);
+  
+  lcd.clear();
+  lcd.print("Input current"); //asks for user's current time to calibrate the RTC
+    lcd.setCursor(0, 1);
+    lcd.print("hour (0-24)");
+  while (Serial.available() == 0) {}
+  int input_hour = Serial.parseInt();
+ 
+  delay(500);
+  lcd.clear();
+  lcd.print("Input minute");
+  while (Serial.available() == 1) {}
+  int input_minute = Serial.parseInt();
+
+  delay(500);
+  lcd.clear();
+  lcd.print("the time is ");
+    lcd.setCursor(0,1);
+    lcd.print(input_hour);
+    lcd.print(":");
+    lcd.print(input_minute);
+  Serial.print(input_hour);
+    Serial.print(":");
+    Serial.println(input_minute);
+
+}
+
+/* HDAMS v0.0
+ * final goals:
+ *  - auto light, heat, humidity, rain, sunset-sunrise, and data management
+ *  - manual management
+ *  - systems check
+ *  - alerts
+ *  - data access and upload
+ * version goals:
+ *  - auto light management
+ *  - sunrise & sunset
+ *  - 
+*/
+
+void loop() {
+
+}
