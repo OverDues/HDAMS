@@ -1,4 +1,3 @@
-#include "RTClib.h"
 #include <Simple5641AS.h>
 #include <LCD_I2C.h>
 #include <EEPROM.h>
@@ -9,8 +8,6 @@ LCD_I2C lcd(0x27, 16, 2); //setting up LCD display
 const uint8_t digitSelectionPins[] = {0,1,2,3};
 const uint8_t segmentPins[] = {5,6,7,8,9,10,11,12};
 Simple5641AS inputDisplay(segmentPins,digitSelectionPins); //setting up digit display
-
-RTC_DS1307 rtc;
 
 void setup() {
   Serial.begin(9600);
